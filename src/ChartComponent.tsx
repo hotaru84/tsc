@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
 import 'chartjs-adapter-date-fns';
+import annotationPlugin from 'chartjs-plugin-annotation';
+ChartJS.register(annotationPlugin);
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +16,7 @@ import {
   BarController,
   ChartData,
   ChartOptions,
+  CartesianScaleOptions,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import { TimeSeriesData } from './data';
@@ -38,7 +41,7 @@ interface ChartComponentProps {
 }
 
 const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
-  const { chartOptionsBase, interaction, plugins, scales } = useChartOptions();
+  const { chartOptionsBase, interaction, plugins, leftAxisOptions, rightAxisOptions, xAxisOptions } = useChartOptions();
 
   const chartData: ChartData<'bar' | 'line', number[], string> = {
     labels: data.map((item) => item.time),
@@ -80,8 +83,12 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
     ...chartOptionsBase,
     interaction,
     plugins,
-    scales,
-  }), [chartOptionsBase, interaction, plugins, scales]);
+    scales: {
+      left: leftAxisOptions as CartesianScaleOptions,
+      right: rightAxisOptions as CartesianScaleOptions,
+      x: xAxisOptions as CartesianScaleOptions,
+    },
+  }), [chartOptionsBase, interaction, plugins, leftAxisOptions, rightAxisOptions, xAxisOptions]);
 
   return (
     <Box width="100%" height="400px">
