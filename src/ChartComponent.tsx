@@ -41,22 +41,6 @@ interface ChartComponentProps {
 }
 
 const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
-  const [width, setWidth] = useState(window.innerWidth * 0.9);
-  const [height, setHeight] = useState(window.innerHeight * 0.9);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth * 0.9);
-      setHeight(window.innerHeight * 0.9);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   const { chartOptionsBase, interaction, plugins, leftAxisOptions, rightAxisOptions, xAxisOptions } = useChartOptions();
 
   const chartData: ChartData<'bar' | 'line', number[], string> = {
@@ -107,7 +91,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ data }) => {
   }), [chartOptionsBase, interaction, plugins, leftAxisOptions, rightAxisOptions, xAxisOptions]);
 
   return (
-    <Box width={width} height={height} mx="auto">
+    <Box width={"full"} mx="auto">
       <Chart type='line' options={options} data={chartData} />
     </Box>
   );

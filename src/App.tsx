@@ -1,12 +1,14 @@
 import ChartComponent from './ChartComponent';
 import { mockData } from './data';
-import { Flex } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+import SyslogTable from './SyslogTable';
 
 function App() {
   return (
-    <Flex w="100vw" h="full" gap={4} p={6}>
+    <VStack w="100vw" h="full" gap={4} p={6}>
       <ChartComponent data={mockData} />
-    </Flex>
+      <SyslogTable />
+    </VStack>
   );
 }
 
